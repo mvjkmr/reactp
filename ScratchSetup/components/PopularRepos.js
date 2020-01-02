@@ -17,7 +17,7 @@ export default class PopularRepos extends React.Component{
         super(props);
         this.state={
             selecetedLanguage:"All",
-            repos:null,
+            repos:{},
             error:null
         }
         this.handleClick = this.handleClick.bind(this);
@@ -30,25 +30,38 @@ export default class PopularRepos extends React.Component{
     handleClick(selecetedLanguage){
         this.setState({
             selecetedLanguage,
-            repos:null,
             error:null
         })
 
+        if(!this.state.repos[selecetedLanguage])
+        {
+
+
         fetchRepos(selecetedLanguage)
-            .then(repos => {
-                this.setState({
-                    repos,
-                    error:null
+            .then(data => {
+                this.setState(({repos}) => {
+                   console.log(repos);
+                    return {  
+                        repos: {
+                            ...repos,
+                            [selecetedLanguage]:data
+                        }
+                    }
+
+                    
                 })
+                console.log(this.state);
             })
             .catch(()=>{
                 console.warn("Error fetching repos!!",error);
                 this.setState({error:"Error Fetching Repos"});
             })
     }
+}
 
     isLoading(){
-        if(!this.state.repos && ! this.state.error)
+        const {selecetedLanguage,repos,error} = this.state;
+        if(!repos[selecetedLanguage] && !error)
             return true;
     }
 
@@ -59,7 +72,7 @@ export default class PopularRepos extends React.Component{
             <React.Fragment>
                 <LanguageNav handleClick={this.handleClick} selecetedLanguage={selecetedLanguage}/>
                 {this.isLoading() &&<p>Loading...</p>}
-                {repos &&<pre>{JSON.stringify(this.state.repos,null,2)}</pre>}
+                {repos &&<pre>{JSON.stringify(repos[selecetedLanguage],null,2)}</pre>}
                 {error && <p>error</p>}
             </React.Fragment>
         )
