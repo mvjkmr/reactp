@@ -4,17 +4,11 @@ html, body, #root{
     width: 100%;
 
 }
-h1{
-    color:#0c7575
-}
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-span{
-    font: .9em sans-serif;
-}
 
 ul {
     padding: 0;
@@ -24,110 +18,216 @@ li {
     list-style-type: none;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0;
+    padding: 50px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn-clear {
     border: none;
     background-color: transparent;
 }
 
-.nav-link{
+.nav-link {
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
     color:inherit;
 }
 
-.flex-center{
+.grid{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
 }
 
-.column {
+.space-around {
+    justify-content: space-around;
+}
+
+
+.header-lg{
+    font-size: 35px;
+    font-weight: 300;
+    margin: 20px;
+}
+
+.header-sm{
+    font-size: 28px;
+    font-weight: 300;
+    margin: 10px;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 3px;
+    margin: 0 auto;
+    display: block;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.link {
+    color: rgb(187,46,31);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card-list {
+    margin: 20px;
+    font-size: 20px;
+}
+
+.card-list li {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.card-list svg {
+    margin: 10px;
+}
+
+.card-list a {
+    font-weight: 500;
+    color: inherit;
+}
+
+.bg-light {
+    background: rgb(0,0,0,0.08);
+    border-radius: 3px;
+}
+
+.repo {
+    margin: 10px 0px;
+    width:250px;
+    padding: 20px;
+}
+
+.repo a {
+    text-decoration: none;
+}
+
+.repo img {
+  margin-bottom: 8px;   
+}
+
+.instructions-container{
+    margin: 100px 0;
+}
+
+.container-sm{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.battle-instructions {
+    padding: 0;
+    font-size: 25px;
+}
+
+.battle-instructions li{
+    flex: 1;
+    min-width: 300px;
+}
+
+.battle-instructions svg{
+    padding:40px;
+    border-radius: 3px;
+}
+
+
+.column{
     display: flex;
     flex-direction: column;
 }
 
-.row {
+.row{
     display: flex;
     flex-direction: row;
-    width: 500px;
 }
-
-.name-lable{
-    font-size: 20px;
-    margin: 5px 0;
-    font-weight: 300;
-    width: 220px;
-}
-
-.profile {
-    flex:1;
+.player{
+    flex: 1;
     margin: 0 20px;
     padding: 10px;
 }
 
-.profile input {
+.player-lable {
+    font-size: 20px;
+    margin: 5px 0;
+    font-weight: 300;
+}
+
+.player-inputs input{
     padding: 8px;
     font-size: 16px;
+    flex: 2;
     border-radius: 3px;
-    border:none;
-    box-shadow: inset 0 1px 2px rgba (0,0,0,0.15);
+    border: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
 }
 
-.input-light{
+.player-inputs input-light {
     background: rgba(0,0,0,0.02);
-    flex: 2px;
-    margin: 5px 0;
 }
 
-.profile button {
-    flex: 1;
-    margin: 20px 0 0 200px;
+.player-inputs button {
+    flex:1;
+    margin-left: 10px;
 }
 
 .btn {
     padding: 10px;
     text-decoration: uppercase;
     letter-spacing: .25em;
+    cursor: pointer;
     border-radius: 3px;
     border: none;
     font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     text-decoration: none;
-    max-width: 220px;
+    max-width: 200px;
 }
 
-.btn-dark{
+.btn-dark {
+    color:#e6e6e6;
     background: #141414;
-    color: #e6e6e6;
 }
 
-.value-label{
-    font-size: 16px;
-    font-weight: 300;
-    padding: 8px;
+.btn-dark:disabled {
+    background: #f2f2f2;
+    color: #c7c7c7;
 }
 
-.check-radio {
-    margin: 15px 0;
+.players-container{
+    margin: 100px 0;
 }
 
-.select-style{
-    font-size: 16px;
-    font-weight: 300;
-    padding: 8px;
-    width: 300px;
-    background: rgba(0,0,0,0.02);
-    border-radius: 3px;
-    border:none;
-    box-shadow: inset 0 1px 2px rgba (0,0,0,0.15);
+.avatar-sm {
+    width: 55px;
+    height: 55px;
+    border-radius: 50% ;
 }
 
-.select-style select{
-    font-size: 16px;
-    font-weight: 300;
-    padding: 8px;
+.player-info {
+    display: flex;
+    flex:1;
+    align-items: center;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.player-info link {
+    margin-left: 10px;
 }

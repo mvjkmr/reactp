@@ -1,6 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import fetchRepos from '../api/api'
+import PropTypes from 'prop-types'
+import {FaUser,FaStar,FaCodeBranch,FaExclamationTriangle} from 'react-icons/fa'
 
 function LanguageNav(props){
     const languages = ["All","Javascript","C","C++","C#","Ruby","Python"];
@@ -10,6 +11,59 @@ function LanguageNav(props){
         {languages.map( language => ( <li style= {selecetedLanguage===language?{color:'rgb(187, 46, 31)'}:null} key={language} ><button onClick={()=>handleClick(language)} className="btn-clear nav-link">{language}</button></li>))}
         </ul>
     )
+}
+
+
+function ReposGrid({repos}){
+    console.log(repos);
+    return(
+        <ul className="grid space-around">
+            {repos.map((repo,index) => {
+                const {name,owner,html_url,stargazers_count,forks,open_issues} = repo;
+                const {login, avatar_url} = owner;
+
+                return(
+                    <li key={html_url} className = 'repo bg-light'>
+                        <h4 className='header-lg center-text'>
+                            #{index+1}
+                        </h4>
+                        <img
+                            className='avatar'
+                            src={avatar_url}
+                            alt={`Avatar for ${login}`}
+                        />
+                        <h2 className='center-text'>
+                <a className='link' href={html_url}>{login}</a>
+                        </h2>
+                    <ul className='card-list'>
+                        <li>
+                            <FaUser color='rgb(255,191,116)' size={22}/>
+                <a href={`https://github.com/${login}`}>{login}</a>
+                        </li>
+                        <li>
+                            <FaStar color='rgb(255,215,0)' size={22}/>
+                {stargazers_count.toLocaleString()} stars
+                        </li>
+                        <li>
+                            <FaCodeBranch color='rgb(129,195,245)' size={22}/>
+                            {forks.toLocaleString()} forks
+                         </li>
+                         <li>
+                            <FaExclamationTriangle color='rgb(241,138,147)' size={22}/>
+                            {open_issues.toLocaleString()} open
+                         </li>
+                    </ul>
+                    </li>
+
+                )
+
+            })}
+        </ul>
+    )
+}
+
+ReposGrid.propTypes = { 
+    repos : PropTypes.array.isRequired
 }
 
 export default class PopularRepos extends React.Component{
@@ -35,12 +89,9 @@ export default class PopularRepos extends React.Component{
 
         if(!this.state.repos[selecetedLanguage])
         {
-
-
-        fetchRepos(selecetedLanguage)
+            fetchRepos(selecetedLanguage)
             .then(data => {
                 this.setState(({repos}) => {
-                   console.log(repos);
                     return {  
                         repos: {
                             ...repos,
@@ -50,7 +101,7 @@ export default class PopularRepos extends React.Component{
 
                     
                 })
-                console.log(this.state);
+                
             })
             .catch(()=>{
                 console.warn("Error fetching repos!!",error);
@@ -72,7 +123,7 @@ export default class PopularRepos extends React.Component{
             <React.Fragment>
                 <LanguageNav handleClick={this.handleClick} selecetedLanguage={selecetedLanguage}/>
                 {this.isLoading() &&<p>Loading...</p>}
-                {repos &&<pre>{JSON.stringify(repos[selecetedLanguage],null,2)}</pre>}
+                {repos[selecetedLanguage] && <ReposGrid repos={repos[selecetedLanguage]}/> }
                 {error && <p>error</p>}
             </React.Fragment>
         )

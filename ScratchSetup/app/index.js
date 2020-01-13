@@ -3,17 +3,19 @@ import ReactDOM from 'react-dom'
 import CheckTask from '../components/CheckTask'
 import PopularRepos from '../components/PopularRepos'
 import PersonalInfo from '../components/PersoanlInfo'
+import Battle from '../components/Battle'
 import  './index.css'
 
 class App extends React.Component{
     render(){
         return(
-            <React.Fragment>
+            <div className="container">
             <h1>ReactP</h1>
             {/* <CheckTask/> */}
             {/* <PopularRepos/> */}
-            <PersonalInfo/>
-            </React.Fragment>
+            {/* <PersonalInfo/> */}
+            <Battle/>
+            </div>
         )
     }
 }
