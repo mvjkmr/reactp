@@ -210,7 +210,11 @@ li {
     color: #c7c7c7;
 }
 
-.players-container{
+.btn-space{
+    margin: 40px auto;
+}
+
+.player-container{
     margin: 100px 0;
 }
 
@@ -228,6 +232,6 @@ li {
     padding: 10px;
 }
 
-.player-info link {
+.player-info a:link {
     margin-left: 10px;
 }

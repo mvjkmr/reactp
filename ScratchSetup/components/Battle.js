@@ -1,6 +1,7 @@
 import React from 'react'
 import {FaUserFriends, FaFighterJet, FaTrophy, FaUser, FaTimesCircle} from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import Results from '../components/Results'
 
 
 function Instructions(){
@@ -52,7 +53,7 @@ class PlayerInput extends React.Component{
 
     render(){
         return(
-            <form className='column-player' onSubmit={this.handleSubmit}>
+            <form className='column player' onSubmit={this.handleSubmit}>
                 <label htmlFor='username' className='player-lable'>
                     {this.props.label}
                 </label>
@@ -97,8 +98,9 @@ function PlayerPreview({username,onReset,label}){
                     alt={`Avatar for ${username}`}
                  />
                  <a 
-                    href={`https://github.com/${username}`}
                     className='link'
+                    href={`https://github.com/${username}`}
+                    
                     >{username}</a>
             </div>
             <button className='btn-clear flex-center' onClick={onReset}>
@@ -122,7 +124,8 @@ export default class Battle extends React.Component{
         super(props);
         this.state = {
             playerOne:null,
-            playerTwo:null
+            playerTwo:null,
+            battle:false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -140,26 +143,41 @@ export default class Battle extends React.Component{
         })
     }
     render(){
-        const {playerOne, playerTwo} = this.state;
+        const {playerOne, playerTwo, battle} = this.state;
+
+        if(battle){
+            return(
+                <Results playerOne={playerOne} playerTwo={playerTwo}/>
+            )
+        }
+
         return (
             <React.Fragment>
                 <Instructions/>
                 <div className='player-container'>
                     <h1 className='center-text header-lg'>Players</h1>
-                    <div className='row place-around'>
+                    <div className='row space-around'>
                     {!playerOne ? (
                         <PlayerInput 
-                        label='Lable!'
+                        label='Player One'
                         onSubmit={player => this.handleSubmit('playerOne',player)} 
                     />
                     ):<PlayerPreview username={playerOne} label='Player One' onReset={() => this.handleReset('playerOne')} />}
                     {!playerTwo ? (
                         <PlayerInput 
-                        label='Lable!'
+                        label='Player Two'
                         onSubmit={player => this.handleSubmit('playerTwo',player)} 
                     />
                     ):<PlayerPreview username={playerTwo} label='Player Two' onReset={() => this.handleReset('playerTwo')} />}
                     </div>
+                    {playerOne && playerTwo && (
+                        <button 
+                        className='btn btn-dark btn-space'
+                        onClick={() => this.setState({battle:true})}
+                        >
+                            Battle
+                        </button>
+                    )}
                 </div>
             </React.Fragment>
         )
