@@ -2,6 +2,7 @@ import React from 'react'
 import {FaUserFriends, FaFighterJet, FaTrophy, FaUser, FaTimesCircle} from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import Results from '../components/Results'
+import {battle} from '../api/api'
 
 
 function Instructions(){
