@@ -235,3 +235,9 @@ li {
 .player-info a:link {
     margin-left: 10px;
 }
+
+.error{
+    color:#ff1616;
+    font-size: 20px;
+    margin: 50px 0;
+}

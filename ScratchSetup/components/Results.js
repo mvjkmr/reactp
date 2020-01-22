@@ -1,6 +1,40 @@
 import React from 'react'
 import {battle} from '../api/api'
 import {FaUser, FaUsers,FaUserFriends,FaCode,FaMapMarkerAlt,FaSuitcase} from 'react-icons/fa'
+import Card from './Card'
+import PropTypes from 'prop-types'
+
+function ProfileList(props){
+    const {name,login,location,company,followers,following,public_repos} = props.profile;
+    return(
+        <React.Fragment>
+            <ul className='card-list'>
+            <li>
+                            <FaUser color='rgb(255,191,116)' size={22}/>{name?name:login}
+            </li>
+            {location && <li>
+                            <FaMapMarkerAlt color='rgb(255,11,11)' size={22}/>{location}
+            </li>}
+            {company && <li>
+                            <FaSuitcase color='rgb(255,191,16)' size={22}/>{company}
+            </li>}
+            <li>
+                            <FaUsers color='rgb(255,11,116)' size={22}/>{followers} followers
+            </li>
+            <li>
+                            <FaUserFriends color='rgb(255,191,6)' size={22}/>{following} following
+            </li>
+            <li>
+                            <FaCode color='rgb(25,11,116)'  size={22}/>{public_repos} repositories
+            </li>
+            </ul>
+        </React.Fragment>
+    )
+}
+
+ProfileList.propTypes = {
+    profile : PropTypes.object.isRequired
+}
 
 export default class Results extends React.Component{
     constructor(props){
@@ -32,80 +66,36 @@ export default class Results extends React.Component{
     render(){
         const {winner,loser,loading,error} = this.state;
         if(loading)
-            return <h4 className='header-sm'>Loading...</h4>
+            return <p>Loading...</p>
+        if(error)
+            return <p className='center-text error'>{error}</p>
         return(
             <div>
-            Results
             {/* <pre>{JSON.stringify(this.state,null,2)}</pre> */}
             <div className="grid space-around">
-                <div className='repo bg-light' >
-                <h4 className='header-lg center-text'> Winner </h4>
-                <img
-                            className='avatar'
-                            src={winner.profile.avatar_url}
-                            alt={`Avatar for ${winner.profile.login}`}
-                        />
-                         <h2 className='header-sm center-text'>
-               Score : {winner.score}
-            </h2>
-                        <h2 className='center-text'>
-                <a className='link' href={winner.profile.html_url}>{winner.profile.login}</a>
-                        </h2>
-                        <ul className='card-list'>
-            <li>
-                            <FaUser color='rgb(255,191,116)' size={22}/>{winner.profile.name?winner.profile.name:winner.profile.login}
-            </li>
-            {winner.profile.location && <li>
-                            <FaMapMarkerAlt color='rgb(255,11,11)' size={22}/>{winner.profile.location}
-            </li>}
-            {winner.profile.company && <li>
-                            <FaSuitcase color='rgb(255,191,16)' size={22}/>{winner.profile.company}
-            </li>}
-            <li>
-                            <FaUsers color='rgb(255,11,116)' size={22}/>{winner.profile.followers} followers
-            </li>
-            <li>
-                            <FaUserFriends color='rgb(255,191,6)' size={22}/>{winner.profile.following} following
-            </li>
-            <li>
-                            <FaCode color='rgb(25,11,116)'  size={22}/>{winner.profile.public_repos} repositories
-            </li>
-            </ul>
-                </div>
-                <div className='repo bg-light'>
-                <h4 className='header-lg center-text'> Loser </h4>
-                <img
-                            className='avatar'
-                            src={loser.profile.avatar_url}
-                            alt={`Avatar for ${loser.profile.login}`}
-                        />
-                         <h2 className='header-sm center-text'>
-               Score : {loser.score}
-            </h2>
-                        <h2 className='center-text'>
-                <a className='link' href={loser.profile.html_url}>{loser.profile.login}</a>
-                        </h2>
-                        <ul className='card-list'>
-            <li>
-                            <FaUser color='rgb(255,191,116)' size={22}/>{loser.profile.name?loser.profile.name:loser.profile.login}
-            </li>
-            { loser.profile.location && <li>
-                            <FaMapMarkerAlt color='rgb(255,11,11)' size={22}/>{loser.profile.location}
-            </li>}
-            {loser.profile.company && <li>
-                            <FaSuitcase color='rgb(255,191,16)' size={22}/>{loser.profile.company}
-            </li>}
-            <li>
-                            <FaUsers color='rgb(255,11,116)' size={22}/>{loser.profile.followers} followers
-            </li>
-            <li>
-                            <FaUserFriends color='rgb(255,191,6)' size={22}/>{loser.profile.following} following
-            </li>
-            <li>
-                            <FaCode color='rgb(25,11,116)'  size={22}/>{loser.profile.public_repos} repositories
-            </li>
-            </ul>
-                </div>
+            
+
+
+                <Card 
+                    header={winner.score === loser.score? 'Tie':'Winner'}
+                    subHeader= {`Score : ${winner.score}`}
+                    avatar={winner.profile.avatar_url}
+                    login={winner.profile.login}
+                    html_url={winner.profile.html_url}
+                    >
+                        <ProfileList profile={winner.profile}/>
+                    </Card>
+            
+                    <Card 
+                    header={winner.score === loser.score? 'Tie':'Loser'}
+                    subHeader= {`Score : ${loser.score}`}
+                    avatar={loser.profile.avatar_url}
+                    login={loser.profile.login}
+                    html_url={loser.profile.html_url}
+                    >
+                        <ProfileList profile={loser.profile}/>
+                    </Card>
+                        
             </div>
         </div>
         )

@@ -2,6 +2,7 @@ import React from 'react'
 import fetchRepos from '../api/api'
 import PropTypes from 'prop-types'
 import {FaUser,FaStar,FaCodeBranch,FaExclamationTriangle} from 'react-icons/fa'
+import Card from './Card'
 
 function LanguageNav(props){
     const languages = ["All","Javascript","C","C++","C#","Ruby","Python"];
@@ -13,29 +14,12 @@ function LanguageNav(props){
     )
 }
 
-
-function ReposGrid({repos}){
-    console.log(repos);
+function RepoDetails(props){
+    const {owner,stargazers_count,forks,open_issues} = props.repo;
+                const {login} = owner;
     return(
-        <ul className="grid space-around">
-            {repos.map((repo,index) => {
-                const {name,owner,html_url,stargazers_count,forks,open_issues} = repo;
-                const {login, avatar_url} = owner;
-
-                return(
-                    <li key={html_url} className = 'repo bg-light'>
-                        <h4 className='header-lg center-text'>
-                            #{index+1}
-                        </h4>
-                        <img
-                            className='avatar'
-                            src={avatar_url}
-                            alt={`Avatar for ${login}`}
-                        />
-                        <h2 className='center-text'>
-                <a className='link' href={html_url}>{login}</a>
-                        </h2>
-                    <ul className='card-list'>
+        <React.Fragment>
+            <ul className='card-list'>
                         <li>
                             <FaUser color='rgb(255,191,116)' size={22}/>
                 <a href={`https://github.com/${login}`}>{login}</a>
@@ -52,7 +36,33 @@ function ReposGrid({repos}){
                             <FaExclamationTriangle color='rgb(241,138,147)' size={22}/>
                             {open_issues.toLocaleString()} open
                          </li>
-                    </ul>
+            </ul>
+        </React.Fragment>
+    )
+}
+
+RepoDetails.propTypes = {
+    repo: PropTypes.object.isRequired
+}
+
+function ReposGrid({repos}){
+    console.log(repos);
+    return(
+        <ul className="grid space-around">
+            {repos.map((repo,index) => {
+                const {name,owner,html_url,stargazers_count,forks,open_issues} = repo;
+                const {login, avatar_url} = owner;
+
+                return(
+                    <li key={html_url}>
+                        <Card 
+                            header={`#${index+1}`}
+                            avatar={avatar_url}
+                            login={login}
+                            html_url={html_url}
+                        >
+                        <RepoDetails repo={repo}/>
+                        </Card>
                     </li>
 
                 )
@@ -124,7 +134,7 @@ export default class PopularRepos extends React.Component{
                 <LanguageNav handleClick={this.handleClick} selecetedLanguage={selecetedLanguage}/>
                 {this.isLoading() &&<p>Loading...</p>}
                 {repos[selecetedLanguage] && <ReposGrid repos={repos[selecetedLanguage]}/> }
-                {error && <p>error</p>}
+                {error && <p className='center-text error'>error</p>}
             </React.Fragment>
         )
     }

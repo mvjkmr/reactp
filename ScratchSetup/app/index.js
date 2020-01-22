@@ -12,9 +12,9 @@ class App extends React.Component{
             <div className="container">
             <h1>ReactP</h1>
             {/* <CheckTask/> */}
-            {/* <PopularRepos/> */}
+            <PopularRepos/>
             {/* <PersonalInfo/> */}
-            <Battle/>
+            {/* <Battle/> */}
             </div>
         )
     }
