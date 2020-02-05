@@ -90,8 +90,7 @@ li {
 .card-list li {
     display: flex;
     align-items: center;
-    margin: 10px;
-}
+    }
 
 .card-list svg {
     margin: 10px;

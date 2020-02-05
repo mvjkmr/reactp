@@ -3,6 +3,7 @@ import fetchRepos from '../api/api'
 import PropTypes from 'prop-types'
 import {FaUser,FaStar,FaCodeBranch,FaExclamationTriangle} from 'react-icons/fa'
 import Card from './Card'
+import Loading from './Loading'
 
 function LanguageNav(props){
     const languages = ["All","Javascript","C","C++","C#","Ruby","Python"];
@@ -132,7 +133,7 @@ export default class PopularRepos extends React.Component{
         return(
             <React.Fragment>
                 <LanguageNav handleClick={this.handleClick} selecetedLanguage={selecetedLanguage}/>
-                {this.isLoading() &&<p>Loading...</p>}
+                {this.isLoading() &&<Loading text='Fetching' speed={100}/>}
                 {repos[selecetedLanguage] && <ReposGrid repos={repos[selecetedLanguage]}/> }
                 {error && <p className='center-text error'>error</p>}
             </React.Fragment>

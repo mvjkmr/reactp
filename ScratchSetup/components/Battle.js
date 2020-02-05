@@ -55,13 +55,13 @@ class PlayerInput extends React.Component{
     render(){
         return(
             <form className='column player' onSubmit={this.handleSubmit}>
-                <label htmlFor='username' className='player-lable'>
+                <label htmlFor={this.props.label} className='player-lable'>
                     {this.props.label}
                 </label>
                 <div className='row player-inputs'>
                     <input 
                         type='text'
-                        id='username'
+                        id={this.props.label}
                         className='input-light'
                         placeholder='github username'
                         autoComplete='off'
@@ -148,7 +148,13 @@ export default class Battle extends React.Component{
 
         if(battle){
             return(
-                <Results playerOne={playerOne} playerTwo={playerTwo}/>
+                <Results playerOne={playerOne} playerTwo={playerTwo} handleClick={()=>{
+                    this.setState({
+                        playerOne:null,
+                        playerTwo:null,
+                        battle:false
+                    })
+                }}/>
             )
         }
 
