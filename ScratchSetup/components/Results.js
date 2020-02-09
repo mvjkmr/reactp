@@ -5,6 +5,9 @@ import Card from './Card'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
 import Tooltip from './Tooltip'
+import queryString from 'query-string'
+import {Link} from 'react-router-dom'
+
 
 // 2. commenting class component and uncommenting functional comp as new comp 'Tooltip' is created.
 
@@ -120,7 +123,7 @@ export default class Results extends React.Component{
         }
     }
     componentDidMount(){
-        const {playerOne,playerTwo} = this.props;
+        const {playerOne,playerTwo} = queryString.parse(this.props.location.search);
         battle([playerOne,playerTwo])
             .then(players => {
                 this.setState({
@@ -169,14 +172,9 @@ export default class Results extends React.Component{
                         <ProfileList profile={loser.profile}/>
                     </Card>
             </div>
-                  <button className='btn btn-dark btn-space' onClick={this.props.handleClick}>Reset</button>      
+                  <Link className='btn btn-dark btn-space' to='/battle'>Reset</Link>      
         </div>
         )
     }
 }
 
-Results.propTypes = {
-    playerOne : PropTypes.string.isRequired,
-    playerTwo : PropTypes.string.isRequired,
-    handleClick : PropTypes.func.isRequired
-}
